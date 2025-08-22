@@ -1,11 +1,6 @@
 ﻿using WebApiDemo.Controllers;
 using WebApiDemo.Services.SEmployee;
 var builder = WebApplication.CreateBuilder(args);
-
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-builder.WebHost.UseUrls($"http://*:{port}");
-
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,11 +13,20 @@ builder.Services.AddScoped<IEmployee, EmployeeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}*/
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = "swagger";
+});
+
+app.MapGet("/", () => Results.Text("API is running 🚀"));
 
 app.UseHttpsRedirection();
 
