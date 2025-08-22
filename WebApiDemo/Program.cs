@@ -1,4 +1,5 @@
-﻿using WebApiDemo.Controllers;
+﻿using Microsoft.Data.SqlClient;
+using WebApiDemo.Controllers;
 using WebApiDemo.Services.SEmployee;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -26,7 +27,26 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-app.MapGet("/", () => Results.Text("API is running 🚀"));
+//app.MapGet("/", () => Results.Text("API is running 🚀"));
+
+app.MapGet("/db-check", async () =>
+{
+    var connStr = Environment.GetEnvironmentVariable("STRING_CONNECT");
+    using var conn = new SqlConnection(connStr);
+    try
+    {
+        await conn.OpenAsync();
+        var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT GETDATE()";
+        var result = await cmd.ExecuteScalarAsync();
+        return Results.Ok($"Conexión exitosa: {result}");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error de conexión: {ex.Message}");
+    }
+});
+
 
 app.UseHttpsRedirection();
 

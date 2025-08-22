@@ -21,7 +21,8 @@
         "DB_USER": "B2000",
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
-        "DB_DATABASE": "master"
+        "DB_DATABASE": "master",
+        "STRING_CONNECT":""
       }
     },
     "https": {
@@ -36,7 +37,8 @@
         "DB_USER": "B2000",
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
-        "DB_DATABASE": "master"
+        "DB_DATABASE": "master",
+        "STRING_CONNECT": ""
       }
     },
     "IIS Express": {
@@ -49,7 +51,8 @@
         "DB_USER": "B2000",
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
-        "DB_DATABASE": "master"
+        "DB_DATABASE": "master",
+        "STRING_CONNECT": ""
       }
     }
   }
