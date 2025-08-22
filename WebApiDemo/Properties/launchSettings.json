@@ -22,7 +22,8 @@
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
         "DB_DATABASE": "master",
-        "STRING_CONNECT":""
+        "DB_TRUSTED_CONNECTION": "false",
+        "STRING_CONNECT": ""
       }
     },
     "https": {
@@ -38,6 +39,7 @@
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
         "DB_DATABASE": "master",
+        "DB_TRUSTED_CONNECTION": "false",
         "STRING_CONNECT": ""
       }
     },
@@ -52,6 +54,7 @@
         "DB_PASS": "B2000",
         "DB_PORT": "1433",
         "DB_DATABASE": "master",
+        "DB_TRUSTED_CONNECTION": "false",
         "STRING_CONNECT": ""
       }
     }

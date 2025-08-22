@@ -19,6 +19,7 @@ namespace WebApiDemo.Services.SEmployee
             sqlParams.user = Environment.GetEnvironmentVariable("DB_USER");
             sqlParams.password = Environment.GetEnvironmentVariable("DB_PASS");
             sqlParams.database = Environment.GetEnvironmentVariable("DB_DATABASE");
+            sqlParams.trusted_connection = Boolean.Parse(Environment.GetEnvironmentVariable("DB_TRUSTED_CONNECTION"));
         }
 
         public Object Insert(string position, string fullname, int? managerID = null)

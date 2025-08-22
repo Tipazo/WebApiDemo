@@ -13,7 +13,7 @@
         {
             if (trusted_connection)
             {
-                return $"Server={host},{port};Database={database};Trusted_Connection=True;";
+                return $"Server=tcp:{host},{port};Initial Catalog={database};Persist Security Info=False;User ID={user};Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             }
             else
             {
@@ -22,3 +22,4 @@
         }
     }
 }
+
