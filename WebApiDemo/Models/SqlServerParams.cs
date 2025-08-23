@@ -3,7 +3,7 @@
     public class SqlServerParams
     {
         public string host { get; set; } = "localhost";
-        public int port { get; set; } = 1430;
+        public int port { get; set; } = 1433;
         public string? database { get; set; } = null;
         public string? user { get; set; } = null;
         public string? password { get; set; } = null;
