@@ -1,6 +1,6 @@
 # WebApiDemo
 
-Ejemplo de aplicaciÃ³n **API Rest**.
+Ejemplo de aplicaciónn **API Rest** Para crear un árbol de jerarquía en base a una tabla que contiene información de las plazas/empleados de una empresa.
 
 ---
 
@@ -10,7 +10,6 @@ Ejemplo de aplicaciÃ³n **API Rest**.
 ---
 
 ## 📌 Configuración inicial
-
 Para crear la tabla, los **Stored Procedures** y poder hacer rollback, ejecuta los siguientes scripts en este orden:
 
 1. **Creación de tabla y procedimientos almacenados**  
@@ -37,8 +36,8 @@ Para probar la aplicaciónn en **Visual Studio** o **Visual Studio Code**:
 ```
 
 ## 🌐 Despliegue en IIS
-Si deseas montar la aplicaciÃ³n en un servidor IIS:
-Crea una variable de entorno de sistema con la siguiente configuraciÃ³n:
+Si deseas montar la aplicación en un servidor IIS:
+Crea una variable de entorno de sistema con la siguiente configuración:
 Clave (Key): API_EMPLOYEE
 Valor (Value): la URL generada por el IIS donde estÃ© publicado el proyecto WebApiDemo.
 
