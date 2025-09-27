@@ -20,7 +20,7 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-app.MapGet("/", () => Results.Text("API is running 🚀"));
+app.MapGet("/", () => Results.Text("API is running !!")).ExcludeFromDescription();
 
 app.UseHttpsRedirection();
 

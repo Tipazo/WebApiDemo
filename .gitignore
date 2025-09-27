@@ -11,6 +11,11 @@ WebApiDemo/obj/
 WebApiDemo/Debug/
 WebApiDemo/Release/
 
+TestWebAPi/bin/
+TestWebAPi/obj/
+TestWebAPi/Debug/
+TestWebAPi/Release/
+
 # Others
 *.log
 *.vsidx
