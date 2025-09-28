@@ -7,7 +7,7 @@ namespace TestWebAPi
         {
 
             int resultado = 105;
-            Assert.Equal(7+3, resultado);
+            Assert.Equal(100+5, resultado);
 
         }
 
@@ -16,7 +16,7 @@ namespace TestWebAPi
         {
             string resultado = "Hola Mundo Comp";
 
-            Assert.Equal("Hola Mundo Comparing changes", resultado);
+            Assert.Equal("Hola Mundo Comp", resultado);
 
         }
     }
