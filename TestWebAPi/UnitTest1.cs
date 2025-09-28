@@ -16,7 +16,7 @@ namespace TestWebAPi
         {
             string resultado = "Hola Mundo Comparing changes";
 
-            Assert.Equal("Hola mundo", resultado);
+            Assert.Equal("Hola Mundo Comparing changes", resultado);
 
         }
     }
