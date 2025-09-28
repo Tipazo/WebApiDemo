@@ -13,6 +13,13 @@ namespace WebApiDemo.Services.SEmployee
         SqlServerHelper sqlServerHelper = new SqlServerHelper();
         SqlServerParams sqlParams = new SqlServerParams();
 
+        private const string TableKey = "Table";
+        private const string FullNameKey = "FullName";
+        private const string ManagerIdKey = "ManagerId";
+        private const string PositionKey = "Position";
+        private const string EmployeeIdKey = "EmployeeId";
+
+        
         public EmployeeService() {
             sqlParams.port = Int32.Parse(Environment.GetEnvironmentVariable("DB_PORT"));
             sqlParams.host = Environment.GetEnvironmentVariable("DB_HOST");
@@ -22,13 +29,13 @@ namespace WebApiDemo.Services.SEmployee
             sqlParams.trusted_connection = Boolean.Parse(Environment.GetEnvironmentVariable("DB_TRUSTED_CONNECTION"));
         }
 
-        public Object Insert(string position, string fullname, int? managerID = null)
+        public Object Insert(string position, string fullname, int? managerId = null)
         {
-            (string procedure, List<SqlParameter> parameters) = Queries.InsertEmployee(position, fullname, managerID);
+            (string procedure, List<SqlParameter> parameters) = Queries.InsertEmployee(position, fullname, managerId);
 
             string[,] tables = new string[,]
             {
-                { "Table", "Employee" }
+                { TableKey, "Employee" }
             };
 
             Object employee = new Object();
@@ -40,10 +47,10 @@ namespace WebApiDemo.Services.SEmployee
                 var row = ds.Tables[0].Rows[0];
                 employee = new
                 {
-                    EmployeeId = (int)row["EmployeeId"],
-                    Position   = row["Position"].ToString(),
-                    FullName   = row["FullName"].ToString(),
-                    ManagerId  = row["ManagerId"] as int?
+                    EmployeeId = (int)row[EmployeeIdKey],
+                    Position   = row[PositionKey].ToString(),
+                    FullName   = row[FullNameKey].ToString(),
+                    ManagerId  = row[ManagerIdKey] as int?
                 };
             }
 
@@ -55,7 +62,7 @@ namespace WebApiDemo.Services.SEmployee
 
             string[,] tables = new string[,]
             {
-                { "Table", "Employee" }
+                { TableKey, "Employee" }
             };
 
             Object employee = new Object();
@@ -67,10 +74,10 @@ namespace WebApiDemo.Services.SEmployee
                 var row = ds.Tables[0].Rows[0];
                 employee = new
                 {
-                    EmployeeId = (int)row["EmployeeId"],
-                    Position = row["Position"].ToString(),
-                    FullName = row["FullName"].ToString(),
-                    ManagerId = row["ManagerId"] as int?
+                    EmployeeId = (int)row[EmployeeIdKey],
+                    Position = row[PositionKey].ToString(),
+                    FullName = row[FullNameKey].ToString(),
+                    ManagerId = row[ManagerIdKey] as int?
                 };
             }
 
@@ -83,7 +90,7 @@ namespace WebApiDemo.Services.SEmployee
 
             string[,] tables = new string[,]
             {
-                { "Table", "Employee" }
+                { TableKey, "Employee" }
             };
 
             Object employee = new Object();
@@ -95,42 +102,32 @@ namespace WebApiDemo.Services.SEmployee
                 var row = ds.Tables[0].Rows[0];
                 employee = new
                 {
-                    EmployeeId = (int)row["EmployeeId"],
-                    Position = row["Position"].ToString(),
-                    FullName = row["FullName"].ToString(),
-                    ManagerId = row["ManagerId"] as int?
+                    EmployeeId = (int)row[EmployeeIdKey],
+                    Position = row[PositionKey].ToString(),
+                    FullName = row[FullNameKey].ToString(),
+                    ManagerId = row[ManagerIdKey] as int?
                 };
             }
 
             return employee;
         }
 
-        public List<EmployeeNode> GetEmployeeHierarchy(int? rootEmployeeId = null)
+        public List<EmployeeNode> EmployeeHierarchy(int? rootEmployeeId = null)
         {
             (string procedure, List<SqlParameter> parameters) = Queries.GetEmployeeHierarchy(rootEmployeeId);
-
             string[,] tables = new string[,]
             {
-                { "Table", "Employees" }
+        { TableKey, "Employees" }
             };
 
             List<EmployeeNode> employees = new List<EmployeeNode>();
-
             DataSet? ds = sqlServerHelper.ExecuteProcedure(procedure, parameters, sqlParams, tables);
 
-            if (ds != null && ds.Tables.Count > 0)
+            if (ds?.Tables.Count > 0)
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    employees.Add(new EmployeeNode
-                    {
-                        EmployeeId = row["EmployeeId"] != DBNull.Value ? (int?)row["EmployeeId"] : null,
-                        Position = row["Position"].ToString() ?? string.Empty,
-                        FullName = row["FullName"].ToString() ?? string.Empty,
-                        Level = row["Level"] != DBNull.Value ? (int?)row["Level"] : null,
-                        ManagerId = row["ManagerId"] != DBNull.Value ? (int?)row["ManagerId"] : null,
-                        IsEnabled = row["IsEnabled"] != DBNull.Value ? (bool?)row["IsEnabled"] : true,
-                    });
+                    employees.Add(MapEmployeeNode(row));
                 }
             }
 
@@ -139,11 +136,11 @@ namespace WebApiDemo.Services.SEmployee
 
         public List<EmployeeNode> BuildHierarchy(List<EmployeeNode> employeesList)
         {
-            var lookup = employeesList.ToDictionary(e => e.EmployeeId);
             List<EmployeeNode> roots = new List<EmployeeNode>();
 
             foreach (var employee in employeesList)
             {
+                var lookup = employeesList.ToDictionary(e => e.EmployeeId);
                 if (employee.ManagerId != null && lookup.ContainsKey(employee.ManagerId.Value))
                 {
                     lookup[employee.ManagerId.Value].Children.Add(employee);
@@ -156,5 +153,29 @@ namespace WebApiDemo.Services.SEmployee
 
             return roots;
         }
+
+        private EmployeeNode MapEmployeeNode(DataRow row)
+        {
+            return new EmployeeNode
+            {
+                EmployeeId = GetNullableInt(row, EmployeeIdKey),
+                Position = row[PositionKey]?.ToString() ?? string.Empty,
+                FullName = row[FullNameKey]?.ToString() ?? string.Empty,
+                Level = GetNullableInt(row, "Level"),
+                ManagerId = GetNullableInt(row, ManagerIdKey),
+                IsEnabled = GetNullableBool(row, "IsEnabled") ?? true
+            };
+        }
+
+        private int? GetNullableInt(DataRow row, string columnName)
+        {
+            return row[columnName] != DBNull.Value ? (int?)row[columnName] : null;
+        }
+
+        private bool? GetNullableBool(DataRow row, string columnName)
+        {
+            return row[columnName] != DBNull.Value ? (bool?)row[columnName] : null;
+        }
+
     }
 }

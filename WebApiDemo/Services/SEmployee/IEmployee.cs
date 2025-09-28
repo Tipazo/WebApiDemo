@@ -8,7 +8,7 @@ namespace WebApiDemo.Services.SEmployee
         public Object UpdateEmployee(UpdateEmployeeDto employeeDto);
 
         public Object GetById(int employeedId);
-        public List<EmployeeNode> GetEmployeeHierarchy(int? rootEmployeeId = null);
+        public List<EmployeeNode> EmployeeHierarchy(int? rootEmployeeId = null);
         public List<EmployeeNode> BuildHierarchy(List<EmployeeNode> employeesList);
     }
 }

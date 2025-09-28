@@ -86,7 +86,7 @@ namespace WebApiDemo.Controllers
 
             try
             {
-                List<EmployeeNode> employees = _employeeService.GetEmployeeHierarchy(rootEmployeeId);
+                List<EmployeeNode> employees = _employeeService.EmployeeHierarchy(rootEmployeeId);
 
                 response.Data = _employeeService.BuildHierarchy(employees);
 
