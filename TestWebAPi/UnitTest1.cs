@@ -6,17 +6,17 @@ namespace TestWebAPi
         public void Test1()
         {
 
-            int resultado = 10;
-            Assert.Equal(7+3, resultado);
+            int resultado = 300;
+            Assert.Equal(200+100, resultado);
 
         }
 
         [Fact]
         public void TestHola()
         {
-            string resultado = "Hola Mundo Comparing changes";
+            string resultado = "Hola Mundo Computing";
 
-            Assert.Equal("Hola Mundo Comparing changes", resultado);
+            Assert.Equal("Hola Mundo Computing", resultado);
 
         }
     }
