@@ -27,14 +27,14 @@ namespace WebApiDemo.Services.SEmployee
 
             parameters.Add(new SqlParameter("@ManagerId", SqlDbType.Int)
             {
-                Value = (object?)managerID ?? DBNull.Value
+                Value = managerID
             });
 
             return (procedure, parameters);
         }
 
 
-        public static (string, List<SqlParameter>) GetById(int employeeId)
+        public static (string, List<SqlParameter>) GetById(int? employeeId = null)
         {
             string procedure = @$"dbo.sp_GetEmployeesById";
 
@@ -42,7 +42,7 @@ namespace WebApiDemo.Services.SEmployee
 
             parameters.Add(new SqlParameter("@EmployeeId", SqlDbType.Int)
             {
-                Value = (object?)employeeId ?? DBNull.Value
+                Value = employeeId
             });
 
             return (procedure, parameters);
@@ -91,7 +91,7 @@ namespace WebApiDemo.Services.SEmployee
 
             parameters.Add(new SqlParameter("@RootEmployeeId", SqlDbType.Int)
             {
-                Value = (object?)rootEmployeeId ?? DBNull.Value
+                Value = rootEmployeeId
             }); 
 
             return (procedure, parameters);
