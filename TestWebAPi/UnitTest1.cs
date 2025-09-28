@@ -14,9 +14,9 @@ namespace TestWebAPi
         [Fact]
         public void TestHola()
         {
-            string resultado = "Hola Mundo";
+            string resultado = "Hola Mundo Comparing changes";
 
-            Assert.Equal("Hola Mundo", resultado);
+            Assert.Equal("Hola Mundo Comparing changes", resultado);
 
         }
     }
